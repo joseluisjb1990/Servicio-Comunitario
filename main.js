@@ -16,24 +16,32 @@ var down2;
 var down3;
 var down4;
 
-function createWaterBall (i,  j, k, l) {
-    var wBall = waterBalls.create(i, j, 'circle');
+function createWaterBall (WBGroup, i,  j, gravityX, gravityY, velocityX, velocityY, bounce) {
+    var wBall = WBGroup.create(i, j, 'circle');
+    wBall.body.velocity.setTo(velocityX, velocityX);
+    wBall.body.gravity.set(gravityX, gravityY);
+    wBall.body.bounce.set(bounce); 
+    wBall.body.collideWorldBounds = false;
+    wBall.checkWorldBounds = true;
+    wBall.events.onOutOfBounds.add(destruir, this);
+    wBall.alive = true;
+
+   /*     var wBall = WBGroup.create(i, j, 'circle');
     wBall.body.velocity.setTo(250, 100);
     wBall.body.gravity.set(100, 200);
     wBall.body.bounce.set(1.0); 
     wBall.body.collideWorldBounds = false;
     wBall.checkWorldBounds = true;
     wBall.events.onOutOfBounds.add(destruir, this);
-    wBall.alive = true;
-
-    var wBall2 = waterBalls2.create(i+20, j+20, 'circle');
+    wBall.alive = true;*/
+    /*var wBall2 = waterBalls2.create(i+20, j+20, 'circle');
     wBall2.body.velocity.setTo(250, 100);
     wBall2.body.gravity.set(100, -200);
     wBall2.body.bounce.set(1.0); 
     wBall2.body.collideWorldBounds = false;
     wBall2.checkWorldBounds = true;
     wBall2.events.onOutOfBounds.add(destruir, this);
-    wBall2.alive = true;
+    wBall2.alive = true;*/
     
 }
 
@@ -195,7 +203,7 @@ var mainState = {
     preload: function() { 
         game.stage.backgroundColor = '#71c5cf';
         //#318CF5 color pelotas
-        game.load.image('circle'    , 'assets/circle3.png');  
+        game.load.image('circle'    , 'assets/Circle3.png');  
         game.load.image('pipeLeft'  , 'assets/pipeLeft.png');      
         game.load.image('pipeRight' , 'assets/pipeRight.png');
         game.load.image('pipeUp'    , 'assets/pipeUp.png');  
@@ -312,14 +320,11 @@ var mainState = {
         game.physics.arcade.collide(waterBalls2, pipesDown);
         
         
-        if(createBall % 3 == 0)
+        if(createBall % 3 == 0 && createBall < 100)
         {
-            for(var i = 1; i <= 2; i++)
-            {
-                createWaterBall(0, 80 - (10 * i), 5, 80 - (10 * i+5) );
-                
-            }
-            
+                createWaterBall(waterBalls, 0, 60, 100, 800, 400, 200, 0.7);
+                createWaterBall(waterBalls, 0, 80, 100, 200, 400, 200, 0.8);
+         /*                   
             waterBalls.forEach(function(sprite) {   
             
                 if (sprite.position.y > 385) {
@@ -350,10 +355,10 @@ var mainState = {
 
                 if (sprite.position.y > 385) {
                     
-                   /* if ((sprite.position.x > 270) && (sprite.position.x < 330))   {
+                    if ((sprite.position.x > 270) && (sprite.position.x < 330))   {
                         sprite.body.velocity.setTo(-200, 250);
                         sprite.body.gravity.set(-200, -100); 
-                    }*/
+                    }
 
                     if ((sprite.position.x > 330) && (sprite.position.x < 610))   {
                         sprite.body.velocity.setTo(250, 100);
@@ -372,7 +377,8 @@ var mainState = {
                 }
             
             }); 
-
+            
+            */
             waterBalls.forEach(function(sprite) {
                       
                 console.debug('destroying:');
@@ -385,27 +391,8 @@ var mainState = {
                 }
                 console.log('destroyed: ')
             });
-            
-            waterBalls2.forEach(function(sprite) {
-                console.debug('destroying:');
-                 
-                
-                if (sprite) { 
-                    if(!sprite.alive) {
-                        waterBalls2.removeChild(sprite);
-                        sprite.destroy(false);
-                    }
-                }
-                console.log('destroyed: ')
-            });       
-            
         }
         createBall++;
-        
-
-
-        
-        
         
         
         down1.body.velocity.x = 0;
