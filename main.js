@@ -7,6 +7,7 @@ var pipesDown;
 var pipesVertical;
 var pipesVertical2;
 var createBall;
+var frecuency;
 var top1;
 var top2;
 var top3;
@@ -18,31 +19,13 @@ var down4;
 
 function createWaterBall (WBGroup, i,  j, gravityX, gravityY, velocityX, velocityY, bounce) {
     var wBall = WBGroup.create(i, j, 'circle');
-    wBall.body.velocity.setTo(velocityX, velocityX);
+    wBall.body.velocity.setTo(velocityX, velocityY);
     wBall.body.gravity.set(gravityX, gravityY);
     wBall.body.bounce.set(bounce); 
     wBall.body.collideWorldBounds = false;
     wBall.checkWorldBounds = true;
     wBall.events.onOutOfBounds.add(destruir, this);
     wBall.alive = true;
-
-   /*     var wBall = WBGroup.create(i, j, 'circle');
-    wBall.body.velocity.setTo(250, 100);
-    wBall.body.gravity.set(100, 200);
-    wBall.body.bounce.set(1.0); 
-    wBall.body.collideWorldBounds = false;
-    wBall.checkWorldBounds = true;
-    wBall.events.onOutOfBounds.add(destruir, this);
-    wBall.alive = true;*/
-    /*var wBall2 = waterBalls2.create(i+20, j+20, 'circle');
-    wBall2.body.velocity.setTo(250, 100);
-    wBall2.body.gravity.set(100, -200);
-    wBall2.body.bounce.set(1.0); 
-    wBall2.body.collideWorldBounds = false;
-    wBall2.checkWorldBounds = true;
-    wBall2.events.onOutOfBounds.add(destruir, this);
-    wBall2.alive = true;*/
-    
 }
 
 function destruir(wBall){
@@ -87,29 +70,6 @@ function createBlock (i, j) {
     var corner = corners.create(i, j, 'block');
     corner.body.immovable = true;
 }
-
-function createBlockTop (i, j) {
-    var corner = corners.create(i, j, 'pipeUp');
-    corner.body.immovable = true;
-}
-
-function createBlockDown (i, j) {
-    var corner = corners.create(i, j, 'pipeDown');
-    corner.body.immovable = true;
-}
-
-function createBlockLeft (i, j) {
-    var corner = corners.create(i, j, 'pipeLeft');
-    corner.body.immovable = true;
-}
-
-function createBlockRight (i, j) {
-    var corner = corners.create(i, j, 'pipeRight');
-    corner.body.immovable = true;
-}
-
-
-
 
 var limit1, limit2, limit3, limit4;
 
@@ -204,8 +164,8 @@ var mainState = {
         game.stage.backgroundColor = '#71c5cf';
         //#318CF5 color pelotas
         game.load.image('circle'    , 'assets/Circle3.png');  
-        game.load.image('pipeLeft'  , 'assets/pipeLeft.png');      
-        game.load.image('pipeRight' , 'assets/pipeRight.png');
+        game.load.image('pipeLeft'  , 'assets/pipeLeft2.png');      
+        game.load.image('pipeRight' , 'assets/pipeRight2.png');
         game.load.image('pipeUp'    , 'assets/pipeUp.png');  
         game.load.image('pipeDown'  , 'assets/pipeDown.png');  
         game.load.image('block'     , 'assets/Block.png');  
@@ -249,36 +209,59 @@ var mainState = {
         createBlock(735, 0);    
         createBlock(760, 0);   
         
-        createBlockTop(454,40);
-        createBlockDown(394,100);
-        createBlockRight(670,43);
-
-
-        top1 = createTopWall(60, 40);
-        top2 = createTopWall(335, 40);
-        top3 = createLeftWall(610, 110);
-        top4 = createLeftWall(275, 110);
         
-        down1 = createDownWall(60,100);
-        down2 = createDownWall(335,100);
-        down3 = createRightWall(670,110);
-        down4 = createRightWall(335,110); 
+        //createDownWall(450,100);
+        //createRightWall(670,43);
+
+
+        top1 = createTopWall (100 , 40);
+
+        top2 = createTopWall  (220 , 40 );
+               createTopWall  (284 , 40 );
+               createTopWall  (351 , 40 );
+        top3 = createLeftWall (217 , 110);
+               createLeftWall (217 , 230);
+               createLeftWall (217 , 290);
+        top4 = createRightWall(277 , 110);
+               createRightWall(277 , 230);
+               createLeftWall (401 , 110);
+               createLeftWall (401 , 230);
+               createDownWall (220 , 401);
+               createDownWall (351 , 401);
+               createDownWall (471 , 401);
+               createDownWall (591 , 401);
+               createDownWall (711 , 401);
+               createRightWall(461 , 110);
+        down4= createRightWall(461 , 230); 
+               //createRightWall(461 , 288);
+        
+               createDownWall(284 , 401);
+
+               createRightWall(461, 43);
+
+
+
+               createDownWall (284 , 100);
+               createTopWall  (284 , 350);
+        
+               createTopWall  (468 , 350);
+               createTopWall  (584 , 350);
+               createTopWall  (704 , 350);
+        
+        down1 = createDownWall(100 , 100);
+        //down2 = createDownWall(395 , 150);
+        //down3 = createRightWall(670, 110);
     
-        createBlockTop(280, 40);
+        //createTopWall(150, 40);
  
         //Abajo
         
-        createBlockLeft(275, 170); 
-        createBlockLeft(275, 224); 
-        createBlockRight(335, 170); 
-        createBlockTop(344, 385);
-        createBlockTop(394, 385);
-        createBlockTop(670, 385);
-        createBlockDown(278, 440);
-        createBlockDown(430, 440);
-        createBlockDown(620, 440);
-        createBlockLeft(610, 170);
-        createBlockRight(670,170);    
+        //createTopWall(394, 385);
+        //createTopWall(670, 385);
+        //createDownWall(430, 440);
+        //createDownWall(620, 440);
+        //createLeftWall(610, 170);
+        //  createRightWall(670,170);    
         
         
         
@@ -289,7 +272,7 @@ var mainState = {
 
         cursors = game.input.keyboard.createCursorKeys();
         createBall = 0;
-
+        frecuency = 0;
         xButton1 = 400;
         xButton2 = 200;
         xButton3 = 0;
@@ -312,18 +295,24 @@ var mainState = {
     update: function() {
 
         game.physics.arcade.collide(waterBalls, corners);
-        game.physics.arcade.collide(waterBalls2, corners);
         game.physics.arcade.collide(waterBalls, waterBalls);
         game.physics.arcade.collide(waterBalls, pipesDown);
+        game.physics.arcade.collide(waterBalls2, corners);
         game.physics.arcade.collide(waterBalls2, waterBalls2);
-        game.physics.arcade.collide(waterBalls2, waterBalls);
         game.physics.arcade.collide(waterBalls2, pipesDown);
         
-        
-        if(createBall % 3 == 0 && createBall < 100)
+        if(createBall % 19 == 0)
         {
-                createWaterBall(waterBalls, 0, 60, 100, 800, 400, 200, 0.7);
-                createWaterBall(waterBalls, 0, 80, 100, 200, 400, 200, 0.8);
+            //createWaterBall(waterBalls, 0, 60, 400, 600, 300, 3500, 0.6);
+            //createWaterBall(waterBalls, 0, 80, 400, 200, 200, 1500, 0.6);
+        }
+        
+        if(createBall < 15 && frecuency % 23 == 0)
+        {
+            createWaterBall(waterBalls, 0, 60, 200, 1500, 200, 1000, 0.3);
+            /*createWaterBall(waterBalls, 10, 40, 200, 1000, 100, 400, 0.8);
+            createWaterBall(waterBalls, 0, 70 , 400, 400 , 200, 400, 0.7);
+         */
          /*                   
             waterBalls.forEach(function(sprite) {   
             
@@ -379,39 +368,21 @@ var mainState = {
             }); 
             
             */
-            waterBalls.forEach(function(sprite) {
-                      
-                console.debug('destroying:');
-
+            createBall++;
+        }
+        
+        frecuency++;
+        waterBalls.forEach(function(sprite) {
+    
                 if (sprite) { 
                     if(!sprite.alive) {
-                        waterBalls.removeChild(sprite);
-                        sprite.destroy(false);
+                        sprite.alive = true;
+                        sprite.position.x = 0;
+                        sprite.position.y = 60;
+                        sprite.body.velocity.setTo(100, 1000);
                     }
                 }
-                console.log('destroyed: ')
             });
-        }
-        createBall++;
-        
-        
-        down1.body.velocity.x = 0;
-        down1.body.velocity.y = 0;
-        down2.body.velocity.x = 0;
-        down2.body.velocity.y = 0;
-        down3.body.velocity.x = 0;
-        down3.body.velocity.y = 0;    
-        down4.body.velocity.x = 0;
-        down4.body.velocity.y = 0; 
-        top1.body.velocity.x = 0;
-        top1.body.velocity.y = 0;
-        top2.body.velocity.x = 0;
-        top2.body.velocity.y = 0;
-        top3.body.velocity.x = 0;
-        top3.body.velocity.y = 0;
-        top4.body.velocity.x = 0;
-        top4.body.velocity.y = 0;
-
     },
 
 };
