@@ -77,9 +77,9 @@ function actionOnClick1 ()
 {      
     
     if (limit1 < 4) {
-        down1.scale.y += 0.5;
-        down1.position.y -= 5;
-        top1.scale.y  +=0.5;
+        down1.scale.x += 0.5;
+        down1.position.x -= 5;
+        top1.scale.x  +=0.5;
         limit1 +=1; 
     }
 }
@@ -87,9 +87,9 @@ function actionOnClick1 ()
 function actionOnClick2 () 
 {
     if (limit1 > 0) {
-        down1.scale.y -= 0.5;
-        down1.position.y += 5;
-        top1.scale.y  -=0.5;
+        down1.scale.x -= 0.5;
+        down1.position.x += 5;
+        top1.scale.x  -=0.5;
         limit1 -=1; 
     }     
 }
@@ -214,41 +214,48 @@ var mainState = {
         //createRightWall(670,43);
 
 
-        top1 = createTopWall (100 , 40);
-
-        top2 = createTopWall  (220 , 40 );
+               createTopWall  (100 , 40 );
+            
+               createTopWall  (220 , 40 );
                createTopWall  (284 , 40 );
                createTopWall  (351 , 40 );
-        top3 = createLeftWall (217 , 110);
-               createLeftWall (217 , 230);
-               createLeftWall (217 , 290);
-        top4 = createRightWall(277 , 110);
-               createRightWall(277 , 230);
-               createLeftWall (401 , 110);
-               createLeftWall (401 , 230);
-               createDownWall (220 , 401);
-               createDownWall (351 , 401);
-               createDownWall (471 , 401);
-               createDownWall (591 , 401);
-               createDownWall (711 , 401);
-               createRightWall(461 , 110);
-        down4= createRightWall(461 , 230); 
+        
+        top3 = createLeftWall (217 , 100);
+               createLeftWall (217 , 180);
+               createDownWall (100 , 100);
+
+               //createLeftWall (217 , 290);
+        down3 = createRightWall(277 , 100);
+                createRightWall(277 , 120);
+                createLeftWall (401 , 119);
+                createTopWall  (284 , 230); // ESTA ES NOJODA
+        
+
+        top1=  createLeftWall (401 , 100);
+        down1= createRightWall(461 , 100);
+               createRightWall(461 , 121 );
+               createRightWall(461 , 43 );
+
+               createDownWall (220 , 291);
+               createDownWall (340 , 291);
+               createDownWall (460 , 291);
+               createDownWall (580 , 291);
+               createDownWall (680 , 291);
+               createTopWall  (468 , 231);
+               createTopWall  (584 , 231);
+               createTopWall  (704 , 231);
+        //createDownWall (711 , 401);
+               //createRightWall(461 , 230); 
                //createRightWall(461 , 288);
         
-               createDownWall(284 , 401);
 
-               createRightWall(461, 43);
 
 
 
                createDownWall (284 , 100);
-               createTopWall  (284 , 350);
         
-               createTopWall  (468 , 350);
-               createTopWall  (584 , 350);
-               createTopWall  (704 , 350);
+
         
-        down1 = createDownWall(100 , 100);
         //down2 = createDownWall(395 , 150);
         //down3 = createRightWall(670, 110);
     
@@ -281,12 +288,12 @@ var mainState = {
         yButton = 550;
         button1 = game.add.button(game.world.centerX - xButton1 + 120, yButton , 'buttonRight', actionOnClick1, this, 2, 1, 0);
         button2 = game.add.button(game.world.centerX - xButton1      , yButton , 'buttonLeft', actionOnClick2, this, 2, 1, 0);
-        button3 = game.add.button(game.world.centerX - xButton2 + 120, yButton , 'buttonRight', actionOnClick3, this, 2, 1, 0);
-        button4 = game.add.button(game.world.centerX - xButton2      , yButton , 'buttonLeft', actionOnClick4, this, 2, 1, 0);
+        //button3 = game.add.button(game.world.centerX - xButton2 + 120, yButton , 'buttonRight', actionOnClick3, this, 2, 1, 0);
+        //button4 = game.add.button(game.world.centerX - xButton2      , yButton , 'buttonLeft', actionOnClick4, this, 2, 1, 0);
         button5 = game.add.button(game.world.centerX - xButton3 + 120, yButton , 'buttonRight', actionOnClick5, this, 2, 1, 0);
         button6 = game.add.button(game.world.centerX - xButton3      , yButton , 'buttonLeft', actionOnClick6, this, 2, 1, 0);
-        button7 = game.add.button(game.world.centerX - xButton4 + 120, yButton , 'buttonRight', actionOnClick7, this, 2, 1, 0);
-        button8 = game.add.button(game.world.centerX - xButton4      , yButton , 'buttonLeft', actionOnClick8, this, 2, 1, 0);
+        //button7 = game.add.button(game.world.centerX - xButton4 + 120, yButton , 'buttonRight', actionOnClick7, this, 2, 1, 0);
+        //button8 = game.add.button(game.world.centerX - xButton4      , yButton , 'buttonLeft', actionOnClick8, this, 2, 1, 0);
         
         
         
@@ -295,82 +302,21 @@ var mainState = {
     update: function() {
 
         game.physics.arcade.collide(waterBalls, corners);
-        game.physics.arcade.collide(waterBalls, waterBalls);
         game.physics.arcade.collide(waterBalls, pipesDown);
         game.physics.arcade.collide(waterBalls2, corners);
-        game.physics.arcade.collide(waterBalls2, waterBalls2);
         game.physics.arcade.collide(waterBalls2, pipesDown);
         
-        if(createBall % 19 == 0)
+        if(frecuency % 11 == 0)
         {
-            //createWaterBall(waterBalls, 0, 60, 400, 600, 300, 3500, 0.6);
-            //createWaterBall(waterBalls, 0, 80, 400, 200, 200, 1500, 0.6);
+            if(createBall < 22)
+            {
+              createWaterBall(waterBalls, 0, 60, 200, 1500, 200, 1000, 0.3);
+              createWaterBall(waterBalls, 0, 60, 50, 3500, 80, 1000, 0.3)                
+              createWaterBall(waterBalls2, 10, 40, 200, 1000, 100, 400, 0.8);
+              createWaterBall(waterBalls2, 10, 40, 400, 1000, 100, 400, 0.6)
+              createBall++;
+            }
         }
-        
-        if(createBall < 15 && frecuency % 23 == 0)
-        {
-            createWaterBall(waterBalls, 0, 60, 200, 1500, 200, 1000, 0.3);
-            /*createWaterBall(waterBalls, 10, 40, 200, 1000, 100, 400, 0.8);
-            createWaterBall(waterBalls, 0, 70 , 400, 400 , 200, 400, 0.7);
-         */
-         /*                   
-            waterBalls.forEach(function(sprite) {   
-            
-                if (sprite.position.y > 385) {
-                    if ((sprite.position.x > 270) && (sprite.position.x < 330))   {
-                        sprite.body.velocity.setTo(200, 250);
-                        sprite.body.gravity.set(200, -100); 
-                    }
-
-                    if ((sprite.position.x > 330) && (sprite.position.x < 610))   {
-                        sprite.body.velocity.setTo(250, 100);
-                        sprite.body.gravity.set(100, 200);
-                    } 
-
-                    if ((sprite.position.x > 610) && (sprite.position.x < 670))   {
-                        sprite.body.velocity.setTo(200, 250);
-                        sprite.body.gravity.set(-200, -100); 
-                    }
-
-                } else {
-                        sprite.body.velocity.setTo(250, 100);
-                        sprite.body.gravity.set(100, 200);
-                }
-                    
-            });        
-
-  
-            waterBalls2.forEach(function(sprite) {     
-
-                if (sprite.position.y > 385) {
-                    
-                    if ((sprite.position.x > 270) && (sprite.position.x < 330))   {
-                        sprite.body.velocity.setTo(-200, 250);
-                        sprite.body.gravity.set(-200, -100); 
-                    }
-
-                    if ((sprite.position.x > 330) && (sprite.position.x < 610))   {
-                        sprite.body.velocity.setTo(250, 100);
-                        sprite.body.gravity.set(100, -200);
-                    } 
-
-
-                    if ((sprite.position.x > 610) && (sprite.position.x < 670))  {
-                        sprite.body.velocity.setTo(-200, 250);
-                        sprite.body.gravity.set(-200, -100);
-                    }
-                
-                 } else {
-                        sprite.body.velocity.setTo(250, 100);
-                        sprite.body.gravity.set(100, -200);
-                }
-            
-            }); 
-            
-            */
-            createBall++;
-        }
-        
         frecuency++;
         waterBalls.forEach(function(sprite) {
     
@@ -379,10 +325,22 @@ var mainState = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 60;
-                        sprite.body.velocity.setTo(100, 1000);
+                        sprite.body.velocity.setTo(80, 1000);
                     }
                 }
             });
+        waterBalls2.forEach(function(sprite) {
+    
+                if (sprite) { 
+                    if(!sprite.alive) {
+                        sprite.alive = true;
+                        sprite.position.x = 0;
+                        sprite.position.y = 60;
+                        sprite.body.velocity.setTo(100, 400);
+                    }
+                }
+            });
+        
     },
 
 };
