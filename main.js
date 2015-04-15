@@ -251,7 +251,197 @@ function actionOnClickLessPower ()
 
 }
 
+function victory1level ()
+{            
+    this.state.start('main2');
+}
+
 var mainState = {
+
+
+    preload: function() { 
+        game.stage.backgroundColor = '#71c5cf';
+        //#318CF5 color pelotas
+        game.load.image('circle'       , 'assets/water.png');  
+        game.load.image('pipeLeft'     , 'assets/pipeLeft.png');      
+        game.load.image('pipeRight'    , 'assets/pipeRight.png');
+        game.load.image('pipeUp'       , 'assets/pipeUp.png');  
+        game.load.image('pipeDown'     , 'assets/pipeDown.png');  
+        game.load.image('tank1'        , 'assets/tank1.png');
+        game.load.image('tank2'        , 'assets/tank2.png');
+        game.load.image('tank3'        , 'assets/tank3.png');
+        game.load.image('button1'      , 'assets/button.png');    
+        game.load.image('button2'      , 'assets/button2.png');
+        game.load.image('buttonPrueba1', 'assets/buttonPrueba.png');
+        game.load.image('buttonPrueba2', 'assets/buttonPrueba2.png');
+        game.load.image('arrow'        , 'assets/arrow.png');
+        game.load.image('poster'       , 'assets/poster.png');
+        game.load.image('meter'        , 'assets/meter.png');
+        game.load.image('buttonLeft'   , 'assets/BotonLeft.jpg');    
+        game.load.image('buttonRight'  , 'assets/BotonRight.jpg');    
+        game.load.image('buttonPower'  , 'assets/BotonPower.jpg');    
+
+ },
+   
+    create: function() { 
+        
+        //Todos los botones
+      //buttonMorePower = game.add.button(xButtonMorePower, yButtonMorePower, 'arrow', actionOnClickMorePower, this, 2, 1, 0);
+      //buttonLessPower = game.add.button(xButtonLessPower, yButtonLessPower, 'arrow', actionOnClickLessPower, this, 2, 1, 0);
+        buttonTop1  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button1', actionOnClickTop1,  this, 2, 1, 0);
+      //buttonTop2  = game.add.button( xButtonTop2,  yButtonTop2 ,  'buttonPrueba1', actionOnClickTop2,  this, 2, 1, 0);
+      //buttonTop3  = game.add.button( xButtonTop3,  yButtonTop3 ,  'buttonPrueba1', actionOnClickTop3,  this, 2, 1, 0);
+      //buttonTop4  = game.add.button (xButtonTop4,  yButtonTop4 ,  'buttonPrueba1', actionOnClickTop4,  this, 2, 1, 0);
+      //buttonTop5  = game.add.button( xButtonTop5,  yButtonTop5 ,  'buttonPrueba1', actionOnClickTop5,  this, 2, 1, 0);
+           
+        var text = game.add.text(350, 20, "Nivel 1");
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        cursors = game.input.keyboard.createCursorKeys();
+        
+        //Inicializando ando
+        corners = game.add.group();
+        corners.enableBody = true;
+
+        pipes = game.add.group();
+        pipes.enableBody = true;
+
+        posters = game.add.group();
+        posters.enableBody = true;
+        
+        waterBalls = game.add.group();
+        waterBalls.enableBody = true;
+        
+        waterBalls2 = game.add.group();
+        waterBalls2.enableBody = true;
+        
+        tanks = game.add.group();
+        tanks.enableBody = true;
+
+        //Tanque
+        createTank(-25,180);
+         
+        
+        //Contadores
+        createPoster(270, 220);
+        textPoster1 = game.add.text(278, 221, cantPoster1);
+       
+        createMeter(500,220);
+        textRes = game.add.text(520, 221, resAct+"/"+resTot);
+        textAmp = game.add.text(520, 190, ampAct+"/"+ampTot);
+ 
+        //Resistencias
+        top1  = createTopWall (240, 270);
+        down1 = createDownWall(240, 340);  
+        
+        //Tuberias Fijas
+        createTopWall (0, 270);
+        createDownWall(0, 340);
+
+        createTopWall (120, 270);
+        createDownWall(120, 340);      
+        
+        createTopWall (240, 270);
+        createDownWall(240, 340);             
+        
+        createTopWall (360, 270);
+        createDownWall(360, 340);        
+        
+        createTopWall (480, 270);
+        createDownWall(480, 340);         
+        
+        createTopWall (600, 270);
+        createDownWall(600, 340);
+        
+        createTopWall (720, 270);
+        createDownWall(720, 340);
+        
+        
+        buttonDown1 = game.add.button( xButtonDown1, yButtonDown1 , 'arrow'        , actionOnClickDown1, this, 2, 1, 0);
+      //buttonDown2 = game.add.button( xButtonDown1, yButtonDown2 , 'arrow'        , actionOnClickDown2, this, 2, 1, 0);
+      //buttonDown3 = game.add.button( xButtonDown1, yButtonDown3,  'arrow'        , actionOnClickDown3, this, 2, 1, 0);
+      //buttonDown4 = game.add.button( xButtonDown1, yButtonDown4,  'arrow'        , actionOnClickDown4, this, 2, 1, 0);
+      //buttonDown5 = game.add.button( xButtonDown1, yButtonDown5,  'arrow'        , actionOnClickDown5, this, 2, 1, 0);   
+        
+        
+    },
+
+    update: function() {
+        
+        //Actualizador numeros
+        textPoster1.text  = cantPoster1;
+        resAct = cantPoster1;
+        textRes.text  = 'RT: ' + resAct+'/'+resTot + ' Ohm'; 
+        var ampT = 20/resAct;
+        textAmp.text  = 'AT: ' + ampT.toFixed(1) +'/'+ampTot + ' Amp'; 
+
+        if(resAct == resTot && ampT == ampTot)
+        {
+            this.state.start('winner');
+        }
+        //Coliciones
+        game.physics.arcade.collide(waterBalls, waterBalls2); 
+        game.physics.arcade.collide(waterBalls, corners);
+        game.physics.arcade.collide(waterBalls, pipes);
+        game.physics.arcade.collide(waterBalls2, corners);
+        game.physics.arcade.collide(waterBalls2, pipes);
+        
+        if(frecuency % 11 == 0)
+        {
+            if(createBall < 22)
+            {
+                //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
+                createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
+                createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+              createBall++;
+            }
+        }
+        frecuency++;
+        waterBalls.forEach(function(sprite) {
+    
+            
+                if (sprite) { 
+                    if(!sprite.alive) {
+                        sprite.alive = true;
+                        sprite.position.x = 0;
+                        sprite.position.y = 310;
+                        sprite.body.velocity.setTo(300, 100);
+                    } /*else {
+                        
+                        if (changeTank) {
+                        
+                            sprite.body.velocity.setTo(power*250, power*130);
+                        }
+                    }*/
+                    
+                }
+            
+            });
+
+        waterBalls2.forEach(function(sprite) {
+    
+                if (sprite) { 
+                    if(!sprite.alive) {
+                        sprite.alive = true;
+                        sprite.position.x = 0;
+                        sprite.position.y = 300;
+                        sprite.body.velocity.setTo(300, -100);
+                    } /*else {
+                        
+                        if (changeTank) {
+                        
+                            sprite.body.velocity.setTo(power*250, power*100);
+                            changeTank = false;
+                        }
+                    }*/
+                }
+            });
+        changeTank = false;
+        
+    },
+
+};
+
+var mainState2 = {
 
 
     preload: function() { 
@@ -381,7 +571,7 @@ var mainState = {
             {
                 //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
                 createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-                createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+                createWaterBall(waterBalls2 , 0, 500, 200, 450 , 300, -100, 1.0);
               createBall++;
             }
         }
@@ -431,5 +621,38 @@ var mainState = {
 
 };
 
-game.state.add('main', mainState);  
+var winnerState = {
+
+
+    preload: function() { 
+        game.stage.backgroundColor = '#71c5cf';
+        game.load.image('poster'       , 'assets/poster.png');  
+ },
+   
+    create: function() { 
+        
+        //Todos los botones
+      //buttonMorePower = game.add.button(xButtonMorePower, yButtonMorePower, 'arrow', actionOnClickMorePower, this, 2, 1, 0);
+      //buttonLessPower = game.add.button(xButtonLessPower, yButtonLessPower, 'arrow', actionOnClickLessPower, this, 2, 1, 0);
+      // buttonTop1  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button1', actionOnClickTop1,  this, 2, 1, 0);
+      //buttonTop2  = game.add.button( xButtonTop2,  yButtonTop2 ,  'buttonPrueba1', actionOnClickTop2,  this, 2, 1, 0);
+      //buttonTop3  = game.add.button( xButtonTop3,  yButtonTop3 ,  'buttonPrueba1', actionOnClickTop3,  this, 2, 1, 0);
+      //buttonTop4  = game.add.button (xButtonTop4,  yButtonTop4 ,  'buttonPrueba1', actionOnClickTop4,  this, 2, 1, 0);
+      //buttonTop5  = game.add.button( xButtonTop5,  yButtonTop5 ,  'buttonPrueba1', actionOnClickTop5,  this, 2, 1, 0);
+           
+        var text = game.add.text(350, 20, "¡GANASTE!");
+        cursors = game.input.keyboard.createCursorKeys();
+        
+        buttonDown1 = game.add.button( 350, 350 , 'poster'        , victory1level, this, 2, 1, 0); 
+        
+        
+    },
+
+    update: function() {},
+
+};
+
+game.state.add('main', mainState);
+game.state.add('main2', mainState2);
+game.state.add('winner', winnerState); 
 game.state.start('main'); 
