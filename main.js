@@ -1,4 +1,4 @@
-//Nivel 1
+//Nivel 10
 
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv'); 
 
@@ -15,20 +15,25 @@ var top1, top2, top3, top4, top5;
 var down1, down2, down3, down4, top5;
 var scoreText;
 
+//Coordenadas de los botones de cerrar tuberia0
+var xButtonTop1  = 500, xButtonTop2  = 500, xButtonTop3  = 0, xButtonTop4  = 0, xButtonTop5  = 0;
+var yButtonTop1  = 390, yButtonTop2  = 390, yButtonTop3  = 0, yButtonTop4  = 0, yButtonTop5  = 0;
+
+//Coordenadas de los botones de abrir tuberia (flecha)
+//Relacion con top x+55/y-20
+var xButtonDown1 = 555, xButtonDown2 = 555, xButtonDown3 = 0, xButtonDown4 = 0, xButtonDown5 = 0;
+var yButtonDown1 = 370, yButtonDown2 = 370, yButtonDown3 = 0, yButtonDown4 = 0, yButtonDown5 = 0;
+
 //Coordenadas boton potencia
-var xButtonMorePower = 0, xButtonLessPower = 0;
-var yButtonMorePower = 0, yButtonLessPower = 0;
+var xButtonMorePower = 80, xButtonLessPower = 80;
+var yButtonMorePower = 100, yButtonLessPower = 150;
 
-var xTank= 16, yTank= 130; 
+var xTank= -25, yTank= 90; 
 
-var cantPoster1 = 5;
-var cantPoster2 = 5;
-var resTot = 20, resAct = 5;
-var resTot1 = 20, resAct1 = 5;
-var ampTot = 1, ampAct = 4;
-var textPoster1, textPoster2, textRes, textAmp, textRes1; 
-
-
+ 
+var cantPower1 = 300, cantPoster1 = 300, cantPoster2 = 100;
+var resTot1 = 500, resTot2 = 150, resTot3 = 100, resAct1 = 500, resAct2 = 600, resAct3=  250;
+var textPower1, textPoster1, textPoster2, textRes1, textRes2, textRes3; 
 
 function createWaterBall (WBGroup, i,  j, gravityX, gravityY, velocityX, velocityY, bounce) {
     var wBall = WBGroup.create(i, j, 'circle');
@@ -110,9 +115,9 @@ function actionOnClickTop1 ()
         down1.scale.y    += 0.75;
         down1.position.y -= 7.5;
         top1.scale.y     += 0.75;
-        limit1           += 1;
-        cantPoster1 = cantPoster1 + 5;
+        limit1           += 1; 
     }
+    cantPoster1 = cantPoster1*2;
 }
 
 function actionOnClickDown1 () 
@@ -122,7 +127,6 @@ function actionOnClickDown1 ()
         down1.position.y += 7.5;
         top1.scale.y     -= 0.75;
         limit1           -=1; 
-        cantPoster1 = cantPoster1 - 5;
     }     
 }
 
@@ -132,8 +136,7 @@ function actionOnClickTop2 ()
         down2.scale.y    += 0.75;
         down2.position.y -= 7.5;
         top2.scale.y     += 0.75;
-        limit2           += 1;
-        cantPoster2 = cantPoster2 + 5;
+        limit2           += 1; 
     }
 }
 
@@ -144,7 +147,6 @@ function actionOnClickDown2 ()
         down2.position.y += 7.5;
         top2.scale.y     -= 0.75;
         limit2           -= 1; 
-        cantPoster2 = cantPoster2 - 5;
     }
 }
 
@@ -161,9 +163,9 @@ function actionOnClickTop3 ()
 function actionOnClickDown3 () 
 {
     if (limit3 > 0) {
-        down3.scale.x    -= 0.5;
-        down3.position.x += 5;
-        top3.scale.x     -= 0.5;
+        down3.scale.x    -= 0.75;
+        down3.position.x += 7.5;
+        top3.scale.x     -= 0.75;
         limit3           -= 1; 
     }
 }
@@ -181,9 +183,9 @@ function actionOnClickTop4 ()
 function actionOnClickDown4 () 
 {
     if (limit4 > 0) {
-        down4.scale.x    -= 0.5;
-        down4.position.x += 5;
-        top4.scale.x     -= 0.5;
+        down4.scale.x    -= 0.75;
+        down4.position.x += 7.5;
+        top4.scale.x     -= 0.75;
         limit4           -= 1; 
     }
 }
@@ -201,9 +203,9 @@ function actionOnClickTop5 ()
 function actionOnClickDown5 () 
 {
     if (limit5 > 0) {
-        down5.scale.x    -= 0.5;
-        down5.position.x += 5;
-        top5.scale.x     -= 0.5;
+        down5.scale.x    -= 0.75;
+        down5.position.x += 7.5;
+        top5.scale.x     -= 0.75;
         limit5           -= 1; 
     }
 }
@@ -249,198 +251,6 @@ function actionOnClickLessPower ()
 
 }
 
-function victory1level ()
-{            
-    this.state.start('main2');
-}
-
-var mainState2 = {
-    preload: function() { 
-        game.stage.backgroundColor = '#71c5cf';
-        //#318CF5 color pelotas
-        game.load.image('circle'       , 'assets/water.png');  
-        game.load.image('pipeLeft'     , 'assets/pipeLeft.png');      
-        game.load.image('pipeRight'    , 'assets/pipeRight.png');
-        game.load.image('pipeUp'       , 'assets/pipeUp.png');  
-        game.load.image('pipeDown'     , 'assets/pipeDown.png');  
-        game.load.image('tank1'        , 'assets/tank1.png');
-        game.load.image('tank2'        , 'assets/tank2.png');
-        game.load.image('tank3'        , 'assets/tank3.png');
-        game.load.image('button'      , 'assets/button.png');    
-        game.load.image('button2'      , 'assets/button2.png');
-        game.load.image('buttonPrueba1', 'assets/buttonPrueba.png');
-        game.load.image('buttonPrueba2', 'assets/buttonPrueba2.png');
-        game.load.image('arrow'        , 'assets/arrow.png');
-        game.load.image('poster'       , 'assets/poster.png');
-        game.load.image('meter'        , 'assets/meter.png');  
-
- },
-   
-    create: function() { 
-        var xButtonTop1  = 180, xButtonTop2  = 450;
-        var yButtonTop1  = 280, yButtonTop2  = 280;
-
-        //Coordenadas de los botones de abrir tuberia (flecha)
-        var xButtonDown1 = 235, xButtonDown2 = 505;
-        var yButtonDown1 = 260, yButtonDown2 = 260;        
-        //Todos los botones
-      //buttonMorePower = game.add.button(xButtonMorePower, yButtonMorePower, 'arrow', actionOnClickMorePower, this, 2, 1, 0);
-      //buttonLessPower = game.add.button(xButtonLessPower, yButtonLessPower, 'arrow', actionOnClickLessPower, this, 2, 1, 0);
-        buttonTop2  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button', actionOnClickTop1,  this, 2, 1, 0);
-        buttonTop1  = game.add.button( xButtonTop2,  yButtonTop2 ,  'button', actionOnClickTop2,  this, 2, 1, 0);
-      //buttonTop3  = game.add.button( xButtonTop3,  yButtonTop3 ,  'buttonPrueba1', actionOnClickTop3,  this, 2, 1, 0);
-      //buttonTop4  = game.add.button (xButtonTop4,  yButtonTop4 ,  'buttonPrueba1', actionOnClickTop4,  this, 2, 1, 0);
-      //buttonTop5  = game.add.button( xButtonTop5,  yButtonTop5 ,  'buttonPrueba1', actionOnClickTop5,  this, 2, 1, 0);
-           
-        var text = game.add.text(350, 20, "Nivel 2");
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-        cursors = game.input.keyboard.createCursorKeys();
-        
-        //Inicializando ando
-        corners = game.add.group();
-        corners.enableBody = true;
-
-        pipes = game.add.group();
-        pipes.enableBody = true;
-
-        posters = game.add.group();
-        posters.enableBody = true;
-        
-        waterBalls = game.add.group();
-        waterBalls.enableBody = true;
-        
-        waterBalls2 = game.add.group();
-        waterBalls2.enableBody = true;
-        
-        tanks = game.add.group();
-        tanks.enableBody = true;
-
-        //Tanque
-        createTank(-25,180);
-         
-        
-        //Contadores
-        
-        createPoster(210, 220);
-        textPoster1 = game.add.text(218, 221, cantPoster1);
-        
-        createPoster(480, 220);
-        textPoster2 = game.add.text(488, 221, cantPoster2);
-   
-        
-        createMeter(665,220);
-        textRes1 = game.add.text(670, 221, resAct1+"/"+resTot1);
- 
-        //Resistencias
-        top1  = createTopWall (180, 270);
-        down1 = createDownWall(180, 340);  
-       
-
-        top2  = createTopWall (450, 270);
-        down2 = createDownWall(450, 340);  
-        
-        //Tuberias Fijas
-        createTopWall (0, 270);
-        createDownWall(0, 340);
-
-        createTopWall (120, 270);
-        createDownWall(120, 340);      
-        
-        createTopWall (240, 270);
-        createDownWall(240, 340);             
-        
-        createTopWall (360, 270);
-        createDownWall(360, 340);        
-        
-        createTopWall (480, 270);
-        createDownWall(480, 340);         
-        
-        createTopWall (600, 270);
-        createDownWall(600, 340);
-        
-        createTopWall (720, 270);
-        createDownWall(720, 340);
-        
-        var xButtonDown1 = 235, xButtonDown2 = 505;
-        var yButtonDown1 = 260, yButtonDown2 = 260;  
-        
-        buttonDown2 = game.add.button( xButtonDown1, yButtonDown1 , 'arrow' , actionOnClickDown1, this, 2, 1, 0);
-        buttonDown1 = game.add.button( xButtonDown2, yButtonDown2 , 'arrow' , actionOnClickDown2, this, 2, 1, 0);
-      //buttonDown3 = game.add.button( xButtonDown3, yButtonDown3,  'arrow' , actionOnClickDown3, this, 2, 1, 0);
-      //buttonDown4 = game.add.button( xButtonDown4, yButtonDown4,  'arrow' , actionOnClickDown4, this, 2, 1, 0);
-      //buttonDown5 = game.add.button( xButtonDown5, yButtonDown5,  'arrow' , actionOnClickDown5, this, 2, 1, 0);   
-        
-        
-    },
-
-    update: function() {
-        
-        //Actualizador numeros
-        textPoster1.text  = cantPoster1;
-        textPoster2.text  = cantPoster2;
-        textRes1.text     = 'RT: ' + (cantPoster1 + cantPoster2) +'/'+resTot1; 
-
-        //Coliciones
-        game.physics.arcade.collide(waterBalls, corners);
-        game.physics.arcade.collide(waterBalls, pipes);
-        game.physics.arcade.collide(waterBalls2, corners);
-        game.physics.arcade.collide(waterBalls2, pipes);
-        game.physics.arcade.collide(waterBalls, waterBalls2); 
-
-        if(frecuency % 11 == 0)
-        {
-            if(createBall < 22)
-            {
-                //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
-              createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-              createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
-              createBall++;
-            }
-        }
-        frecuency++;
-        waterBalls.forEach(function(sprite) {
-    
-            
-                if (sprite) { 
-                    if(!sprite.alive) {
-                        sprite.alive = true;
-                        sprite.position.x = 0;
-                        sprite.position.y = 310;
-                        sprite.body.velocity.setTo(250, 130);
-                    } else {
-                        
-                        if (changeTank) {
-                        
-                            sprite.body.velocity.setTo(300, 100);
-                        }
-                    }
-                    
-                }
-            
-            });
-
-        waterBalls2.forEach(function(sprite) {
-    
-                if (sprite) { 
-                    if(!sprite.alive) {
-                        sprite.alive = true;
-                        sprite.position.x = 0;
-                        sprite.position.y = 300;
-                        sprite.body.velocity.setTo(300, -100);
-                    } else {
-                        
-                        if (changeTank) {
-                        
-                            sprite.body.velocity.setTo(250, 100);
-                            changeTank = false;
-                        }
-                    }
-                }
-            });
-        changeTank = false;
-    },
-};
-
 var mainState = {
 
 
@@ -455,32 +265,33 @@ var mainState = {
         game.load.image('tank1'        , 'assets/tank1.png');
         game.load.image('tank2'        , 'assets/tank2.png');
         game.load.image('tank3'        , 'assets/tank3.png');
-        game.load.image('button1'      , 'assets/button.png');    
+        game.load.image('button'       , 'assets/button.png');    
         game.load.image('button2'      , 'assets/button2.png');
         game.load.image('buttonPrueba1', 'assets/buttonPrueba.png');
         game.load.image('buttonPrueba2', 'assets/buttonPrueba2.png');
         game.load.image('arrow'        , 'assets/arrow.png');
+        game.load.image('arrow2'       , 'assets/arrow2.png');
         game.load.image('poster'       , 'assets/poster.png');
         game.load.image('meter'        , 'assets/meter.png');
         game.load.image('buttonLeft'   , 'assets/BotonLeft.jpg');    
         game.load.image('buttonRight'  , 'assets/BotonRight.jpg');    
         game.load.image('buttonPower'  , 'assets/BotonPower.jpg');    
+        game.load.image('block'        , 'assets/Block.png');    
 
  },
    
     create: function() { 
-        var xButtonTop1  = 240;
-        var yButtonTop1  = 280;
+        
         //Todos los botones
-      //buttonMorePower = game.add.button(xButtonMorePower, yButtonMorePower, 'arrow', actionOnClickMorePower, this, 2, 1, 0);
-      //buttonLessPower = game.add.button(xButtonLessPower, yButtonLessPower, 'arrow', actionOnClickLessPower, this, 2, 1, 0);
-        buttonTop1  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button1', actionOnClickTop1,  this, 2, 1, 0);
+        buttonMorePower = game.add.button(xButtonMorePower, yButtonMorePower, 'arrow', actionOnClickMorePower, this, 2, 1, 0);
+        buttonLessPower = game.add.button(xButtonLessPower, yButtonLessPower, 'arrow2', actionOnClickLessPower, this, 2, 1, 0);
+        buttonTop1  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button', actionOnClickTop1,  this, 2, 1, 0);
       //buttonTop2  = game.add.button( xButtonTop2,  yButtonTop2 ,  'buttonPrueba1', actionOnClickTop2,  this, 2, 1, 0);
       //buttonTop3  = game.add.button( xButtonTop3,  yButtonTop3 ,  'buttonPrueba1', actionOnClickTop3,  this, 2, 1, 0);
       //buttonTop4  = game.add.button (xButtonTop4,  yButtonTop4 ,  'buttonPrueba1', actionOnClickTop4,  this, 2, 1, 0);
       //buttonTop5  = game.add.button( xButtonTop5,  yButtonTop5 ,  'buttonPrueba1', actionOnClickTop5,  this, 2, 1, 0);
            
-        var text = game.add.text(350, 20, "Nivel 1");
+        var text = game.add.text(350, 20, "Nivel 10");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         cursors = game.input.keyboard.createCursorKeys();
         
@@ -504,43 +315,74 @@ var mainState = {
         tanks.enableBody = true;
 
         //Tanque
-        createTank(-25,180);
+        createTank(xTank,yTank);
          
-        
-        //Contadores
-        createPoster(270, 220);
-        textPoster1 = game.add.text(278, 221, cantPoster1);
-       
-        createMeter(500,220);
-        textRes = game.add.text(520, 221, resAct+"/"+resTot);
-        textAmp = game.add.text(520, 190, ampAct+"/"+ampTot);
 
+        //Contadores
+        textPower1 = game.add.text(18, 51, cantPower1);
+        createPoster(10, 50);
+        
+        createMeter(650,130);
+        textRes1 = game.add.text(670, 131, resAct1+"/"+resTot1);
+ 
+        createPoster(530, 330);
+        textPoster1 = game.add.text(538, 331, cantPoster1);
+       
+        createMeter(650,330);
+        textRes2 = game.add.text(670, 331, resAct2+"/"+resTot2);
+ 
+        createMeter(150,130);
+        textRes3 = game.add.text(170, 131, resAct3+"/"+resTot3);
+         
+        //createBlock(315,195);
         //Resistencias
-        top1  = createTopWall (240, 270);
-        down1 = createDownWall(240, 340);  
+        top1  = createTopWall (500, 380);
+        down1 = createDownWall(500, 450);  
         
         //Tuberias Fijas
-        createTopWall (0, 270);
-        createDownWall(0, 340);
+        createTopWall (0, 180);
+        createDownWall(0, 250);
 
-        createTopWall (120, 270);
-        createDownWall(120, 340);      
+        createTopWall (120, 180);
+        createDownWall(120, 250);      
         
-        createTopWall (240, 270);
-        createDownWall(240, 340);             
+        createTopWall (240, 180);
+        createDownWall(180, 250);             
         
-        createTopWall (360, 270);
-        createDownWall(360, 340);        
+        createTopWall (360, 180);
+        createDownWall(380, 250);        
         
-        createTopWall (480, 270);
+        createTopWall (480, 180);
+        createDownWall(480, 250);         
+        
+        createTopWall (600, 180);
+        createDownWall(600, 250);
+        
+        createTopWall (720, 180);
+        createDownWall(720, 250);
+       
+        //Tubo bajando
+        
+        createLeftWall(300, 250);
+        createRightWall(370, 250);
 
-        createDownWall(480, 340);         
+        createLeftWall(300, 340);
+        createRightWall(370, 270);
         
-        createTopWall (600, 270);
-        createDownWall(600, 340);
+        //Tubo de abajo
+        createDownWall(310, 450); 
         
-        createTopWall (720, 270);
-        createDownWall(720, 340);
+        createTopWall (380, 380);
+        createDownWall(360, 450);        
+        
+        createTopWall (480, 380);
+        createDownWall(480, 450);         
+        
+        createTopWall (600, 380);
+        createDownWall(600, 450);
+        
+        createTopWall (720, 380);
+        createDownWall(720, 450);       
         
         
         buttonDown1 = game.add.button( xButtonDown1, yButtonDown1 , 'arrow'        , actionOnClickDown1, this, 2, 1, 0);
@@ -554,17 +396,13 @@ var mainState = {
 
     update: function() {
         
-        textPoster1.text  = cantPoster1;
-        resAct = cantPoster1;
-        textRes.text  = 'RT: ' + resAct+'/'+resTot + ' Ohm'; 
-        var ampT = 20/resAct;
-        textAmp.text  = 'AT: ' + ampT.toFixed(1) +'/'+ampTot + ' Amp'; 
-
         //Actualizador numeros
-        if(resAct == resTot && ampT == ampTot)
-        {
-            this.state.start('winner');
-        }
+         textPower1.text  = cantPower1;
+         textPoster1.text  = cantPoster1;
+         textRes1.text      = resAct1+'/'+resTot1; 
+         textRes2.text      = resAct2+'/'+resTot2; 
+         textRes3.text      = resAct3+'/'+resTot3;
+
         //Coliciones
         game.physics.arcade.collide(waterBalls, corners);
         game.physics.arcade.collide(waterBalls, pipes);
@@ -572,13 +410,19 @@ var mainState = {
         game.physics.arcade.collide(waterBalls2, pipes);
         game.physics.arcade.collide(waterBalls, waterBalls2); 
         
+        var posX = 0;
+        var posYWB1 = 220;
+        var posYWB2 = 210;
+        
         if(frecuency % 11 == 0)
         {
+
+            
             if(createBall < 22)
             {
                 //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
-              createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-              createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+              createWaterBall(waterBalls , 0, posYWB1 , 200, -450 , 300, 100, 1.0);   
+              createWaterBall(waterBalls2 , 0, posYWB2, 200, 450 , 300, -100, 1.0);
               createBall++;
             }
         }
@@ -590,11 +434,31 @@ var mainState = {
                     if(!sprite.alive) {
                         sprite.alive = true;
                         sprite.position.x = 0;
-                        sprite.position.y = 310;
+                        sprite.position.y = posYWB1;
                         sprite.body.velocity.setTo(300, 100);
+                        sprite.body.gravity.set(200, -450);
+                    } else {
+                      
+                        if(sprite.position.x > 315 && sprite.position.x < 375 && sprite.position.y > 195 && sprite.position.y < 255)
+                        {
+                            sprite.body.gravity.set(200, 500);
+                            sprite.body.velocity.setTo(300, 500);
+                        }
+                        
+                        if(sprite.position.x > 315 && sprite.position.x < 375 && sprite.position.y >=255 && sprite.position.y < 265)
+                        {
+                            sprite.body.gravity.set(300, 200);
+                            sprite.body.velocity.setTo(300, 200);
+                        }
+                        
+                       // if (changeTank) {
+                        
+                         //   sprite.body.velocity.setTo(300, 100);
+                    //    }
                     }
                     
                 }
+            
             });
 
         waterBalls2.forEach(function(sprite) {
@@ -603,43 +467,22 @@ var mainState = {
                     if(!sprite.alive) {
                         sprite.alive = true;
                         sprite.position.x = 0;
-                        sprite.position.y = 300;
+                        sprite.position.y = posYWB2;
                         sprite.body.velocity.setTo(300, -100);
-                    }
+                    } /*else {
+                        
+                        if (changeTank) {
+                        
+                            sprite.body.velocity.setTo(300, -100);
+                            changeTank = false;
+                        }
+                    }*/
                 }
-            });        
+            });
+        changeTank = false;
     },
 
 };
 
-var textWinner;
-
-var winnerState = {
-
-
-    preload: function() { 
-        game.stage.backgroundColor = '#71c5cf';
-        game.load.image('poster'       , 'assets/poster.png');  
- },
-   
-    create: function() {
-        textWinner = game.add.text(300, 250, "¡GANASTE!", { size:'458px', fontSize: '128px', fill: '#000' });
-        cursors = game.input.keyboard.createCursorKeys();
-        
-        buttonDown1 = game.add.button( 350, 350 , 'poster', victory1level, this, 2, 1, 0); 
-        
-        resAct = 0;
-        cantPoster1 = 5;
-        cantPoster2 = 5;
-        limit1 = 0;
-        limit2 = 0;
-    },
-
-    update: function() { textWinner = '¡GANASTE!'},
-
-};
-
-game.state.add('main', mainState);
-game.state.add('main2', mainState2);
-game.state.add('winner', winnerState);
-game.state.start('main');
+game.state.add('main', mainState);  
+game.state.start('main'); 
