@@ -1779,6 +1779,8 @@ var mainState7 = {
 //////////////////////////////////////////////////////////NIVEL 6///////////////////////////////////////////////////////
 var mainState6 = {
 
+    preload: cargarTodo,
+    
     create: function() { 
         
         //Todos los botones
@@ -1909,9 +1911,9 @@ var mainState6 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 310;
-                        sprite.body.velocity.setTo(300, 100);
+                        sprite.body.velocity.setTo(300*limitTank, 100*limitTank);
                     }
-                    
+                    manageSpeed(sprite);
                 }
             });
 
@@ -1922,10 +1924,12 @@ var mainState6 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 300;
-                        sprite.body.velocity.setTo(300, -100);
+                        sprite.body.velocity.setTo(300*limitTank, -100*limitTank);
                     }
+                    manageSpeed2(sprite);
                 }
-            });        
+            });
+        changeTank = false;
     },
 
 };
@@ -1934,6 +1938,7 @@ var mainState6 = {
 //////////////////////////////////////////////////////////NIVEL 5///////////////////////////////////////////////////////
 var mainState5 = {
 
+    preload:cargarTodo,
 
     create: function() { 
         
@@ -2011,13 +2016,15 @@ var mainState5 = {
     },
 
     update: function() {
-       /* 
+     
         //Actualizador numeros
-        textPower1.text  = cantPower1;
+        textPoster1.text  = cantPoster1;
+        textPower1.text    = cantPower1;
+        resAct1 = cantPoster1;
         textRes1.text      = resAct1+'/'+resTot1; 
         
-        	*/
-        if (saltar) {
+        
+        if (resAct1 == resTot1 && cantPower1 == 60) {
             saltar = false;
             this.state.start('winner');
         }
@@ -2049,9 +2056,9 @@ var mainState5 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 310;
-                        sprite.body.velocity.setTo(300, 100);
+                        sprite.body.velocity.setTo(300*limitTank, 100*limitTank);
                     }
-                    
+                    manageSpeed(sprite);                    
                 }
             });
 
@@ -2062,10 +2069,12 @@ var mainState5 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 300;
-                        sprite.body.velocity.setTo(300, -100);
+                        sprite.body.velocity.setTo(300*limitTank, -100*limitTank);
                     }
+                    manageSpeed2(sprite);
                 }
-            });        
+            });
+        changeTank = false;
     },
 
 };
@@ -2143,7 +2152,7 @@ var mainState4 = {
         
         //Actualizador numeros
         textPower1.text  = cantPower1;
-        textRes1.text      = resAct1+'/'+resTot1; 
+        textRes1.text    = resAct1+'/'+resTot1; 
             
         //Coliciones
         game.physics.arcade.collide(waterBalls, corners);
@@ -2151,6 +2160,11 @@ var mainState4 = {
         game.physics.arcade.collide(waterBalls2, corners);
         game.physics.arcade.collide(waterBalls2, pipes);
         game.physics.arcade.collide(waterBalls, waterBalls2); 
+        
+        if (cantPower1 == 60) {
+            saltar = false;
+            this.state.start('winner');
+        }
         
         if(frecuency % 11 == 0)
         {
@@ -2171,12 +2185,9 @@ var mainState4 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 310;
-                    }
-                    
-                    if(changeTank)
-                    {
-                        sprite.body.velocity.setTo(sprite.body.velocity.x * limitTank, sprite.body.velocity.y * limitTank);
-                    }
+                        sprite.body.velocity.setTo(300*limitTank, 100*limitTank);
+                    }                    
+                    manageSpeed(sprite);
                 }
             });
 
@@ -2187,11 +2198,9 @@ var mainState4 = {
                         sprite.alive = true;
                         sprite.position.x = 0;
                         sprite.position.y = 300;
+                        sprite.body.velocity.setTo(300*limitTank, -100*limitTank);
                     }
-                    if(changeTank)
-                    {
-                        sprite.body.velocity.setTo(sprite.body.velocity.x * limitTank, sprite.body.velocity.y * limitTank);
-                    }
+                    manageSpeed2(sprite);
                 }
             });
             changeTank = false;
@@ -2199,9 +2208,6 @@ var mainState4 = {
     },
 
 };
-
-
-
 
 //////////////////////////////////////////////////////////NIVEL 3///////////////////////////////////////////////////////
 var mainState3 = {
@@ -2526,8 +2532,6 @@ function cargarTodo() {
         game.load.image('meter'        , 'assets/meter.png');
 
  }
-
-
 //////////////////////////////////////////////////////////NIVEL 1///////////////////////////////////////////////////////
 var mainState = {
 
@@ -2670,6 +2674,44 @@ var mainState = {
     },
 
 };
+
+function manageSpeed(sprite)
+{
+    if(changeTank)
+    {
+        if(limitTank == 1)
+        {
+            sprite.body.velocity.setTo(300, 100);
+        }
+        if(limitTank == 2)
+        {
+            sprite.body.velocity.setTo(300*2, 100*2);
+        }
+        if(limitTank == 3)
+        {
+            sprite.body.velocity.setTo(300*3, 100*3);
+        }
+    }
+}
+
+function manageSpeed2(sprite)
+{
+    if(changeTank)
+    {
+        if(limitTank == 1)
+        {
+            sprite.body.velocity.setTo(300, -100);
+        }
+        if(limitTank == 2)
+        {
+            sprite.body.velocity.setTo(300*2, -100*2);
+        }
+        if(limitTank == 3)
+        {
+            sprite.body.velocity.setTo(300*3, -100*3);
+        }
+    }
+}
 
 function createWaterBall (WBGroup, i,  j, gravityX, gravityY, velocityX, velocityY, bounce) {
     var wBall = WBGroup.create(i, j, 'circle');
@@ -2871,6 +2913,7 @@ function actionOnClickMorePower ()
         }  
         limitTank += 1;
         changeTank = true;
+        cantPower1 = cantPower1 + 20;
     }
 }
 
@@ -2889,6 +2932,7 @@ function actionOnClickLessPower ()
         }
         limitTank -= 1;
         changeTank = true;
+        cantPower1 = cantPower1 - 20;
     }
 }
 
@@ -3134,7 +3178,7 @@ function updateLevel14 () {
 
     xTank= -25, yTank= 190; 
 
-    cantPower1 = 300, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700,  cantPoster4 = 505,  cantPoster5 = 900;
+    cantPower1 = 20, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700,  cantPoster4 = 505,  cantPoster5 = 900;
     resTot1 = 500, resTot2 = 150, resTot3 = 100, resTot4 = 500, resAct1 = 500, resAct2 = 600, resAct3=  250, resAct4=  750;
 }
 
@@ -3244,8 +3288,12 @@ function updateLevel6 () {
     xButtonDown1 = 395, xButtonDown2 = 575, xButtonDown3 = 595, xButtonDown4 = 0, xButtonDown5 = 0;
     yButtonDown1 = 260, yButtonDown2 = 260, yButtonDown3 = 260, yButtonDown4 = 0, yButtonDown5 = 0;
 
-    cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 500, cantPower1 = 500;
-    resTot1 = 900, resTot2 = 700, resAct1 = 350, resAct2 = 100;
+    xButtonMorePower = 80, xButtonLessPower = 80;
+    yButtonMorePower = 190, yButtonLessPower = 240;
+    
+    cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 500, cantPower1 = 20;
+    resTot1 = 10, resTot2 = 15, resAct1 = cantPoster1, resAct2 = cantPoster2;
+    changeTank = false; limitTank = 1;
 }
 
 function updateLevel5 () {
@@ -3259,8 +3307,9 @@ function updateLevel5 () {
     xButtonMorePower = 80, xButtonLessPower = 80;
     yButtonMorePower = 190, yButtonLessPower = 240;
 
-    cantPower1 = 300, cantPoster1 = 300;
-    resTot1 = 900, resAct1 = 350;
+    cantPower1 = 20, cantPoster1 = 5; limitTank = 1;
+    resTot1    = 15, resAct1 = cantPoster1;
+    changeTank = false;
 }
 
 function updateLevel4 () {
@@ -3275,8 +3324,8 @@ function updateLevel4 () {
     xButtonMorePower = 80, xButtonLessPower = 80;
     yButtonMorePower = 190, yButtonLessPower = 240;
 
-    cantPower1 = 300; limitTank = 1;
-    resTot1 = 900, resAct1 = 350;
+    cantPower1 = 20; limitTank = 1;
+    resTot1 = 5, resAct1 = 5;
 }
 
 function updateLevel3 () {
@@ -3306,7 +3355,7 @@ function updateLevel2 () {
    resTot1 = 35, resAct1 = 100; 
 }
 
-siguienteNivel = 4;
+siguienteNivel = 6;
 game.state.add('main' , mainState);
 game.state.add('main2', mainState2);
 game.state.add('main3', mainState3);
