@@ -521,7 +521,8 @@ var mainState14 = {
 
 //////////////////////////////////////////////////////////NIVEL 13///////////////////////////////////////////////////////
 var mainState13 = {
-
+    preload: cargarTodo,
+    
     create: function() { 
         
         //Todos los botones
@@ -676,11 +677,30 @@ var mainState13 = {
         textPoster3.text  = cantPoster3;
         textPoster4.text  = cantPoster4;
         textPoster5.text  = cantPoster5;
+        
+        resAct1 = cantPoster1+cantPoster2;
+        resAct2 = cantPoster3+cantPoster4+cantPoster5; 
+        
         textRes1.text      = resAct1+'/'+resTot1; 
         textRes2.text      = resAct2+'/'+resTot2; 
 
-	
-        if (saltar) {
+        //cuenticas
+        
+        var r1 = cantPoster1;
+        var r2 = cantPoster2;
+        var r3 = cantPoster3;
+        var r4 = cantPoster4;
+        var r5 = cantPoster5;
+        
+        var r123 = r1 + r2;
+        var r45  = r3 + r4 + r5;
+        
+        var rTotal = 1 / ((1/r123)+(1/r45));
+        var vTotal = 20 * limitTank;
+        var iTotal = vTotal / rTotal;
+        
+
+        if (r123 == resTot1 && r45 == resTot2) {
             saltar = false;
             this.state.start('winner');
         }
@@ -697,8 +717,8 @@ var mainState13 = {
             if(createBall < 22)
             {
                 //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
-              createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-              createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+              //createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
+              //createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
               createBall++;
             }
         }
@@ -863,12 +883,31 @@ var mainState12 = {
         textPoster1.text  = cantPoster1;
         textPoster2.text  = cantPoster2;
         textPoster3.text  = cantPoster3;
+        
+        resAct1 = cantPoster2;
+        resAct2 = cantPoster3;
+        resAct3 = cantPoster1;
+        
         textRes1.text      = resAct1+'/'+resTot1; 
         textRes2.text      = resAct2+'/'+resTot2; 
         textRes3.text      = resAct3+'/'+resTot3;
         
-	
-        if (saltar) {
+        var r1     = cantPoster3;
+        var r2     = cantPoster1;
+        var r3     = cantPoster2;
+        var r23    = 1 / ((1/r2) + (1/r3));
+        var rTotal = r1 + r23;
+        var vTotal = 20*limitTank;
+        var iTotal = vTotal / rTotal;
+        
+         //Valores individuales
+        
+        var vr1  = iTotal * r1;
+        var vr23 = iTotal * r23;
+        var ir2  = vr23 /  r2;
+        var ir3  = vr23 / r3;
+        
+        if (resAct1 == resTot1 && resAct2 == resTot2 && resAct3 == resTot3 && vTotal == 40) {
             saltar = false;
             this.state.start('winner');
         }
@@ -919,7 +958,6 @@ var mainState12 = {
     },
 
 };
-
 
 //////////////////////////////////////////////////////////NIVEL 11///////////////////////////////////////////////////////
 
@@ -1053,6 +1091,7 @@ var mainState11 = {
         textRes1.text      = resAct1+'/'+resTot1; 
         textRes2.text      = (resAct3+resAct2)+'/'+resTot2; 
 	
+
         var r1     = resAct1;
         var r2     = resAct2;
         var r3     = resAct3;
@@ -1060,13 +1099,15 @@ var mainState11 = {
         var rTotal = 1 / ((1/r1) + (1/r23));
         var vTotal = 20*limitTank;
         var iTotal = vTotal / rTotal;
-    
-        //Valores individuales
         
-        var vr1  = vTotal;
-        var vr23 = vTotal;
-        var ir1   = vr1 / r1;
-        var ir23  = vr23 / r23;
+         //Valores individuales
+         var ir1   = vTotal / r1;  //Imprimir en el medidor de arriba
+         var ir23  = vTotal / r23; //Imprimir en el medidor de abajo
+        
+         var vr1  = ir1  * r1;
+         var vr2  = ir23 * r2;
+         var vr3  = ir23 * r3;
+
         
         if (r1 == resTot1 && resTot2 == r23) {
             saltar = false;
@@ -3294,7 +3335,7 @@ function updateLevel14 () {
 
     xTank= -25, yTank= 190; 
 
-    cantPower1 = 20, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700,  cantPoster4 = 505,  cantPoster5 = 900;
+    cantPower1 = 20, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 5,  cantPoster4 = 5,  cantPoster5 = 5;
     resTot1 = 500, resTot2 = 150, resTot3 = 100, resTot4 = 500, resAct1 = 500, resAct2 = 600, resAct3=  250, resAct4=  750;
 }
 
@@ -3306,8 +3347,9 @@ function updateLevel13 () {
     xButtonDown1 = 455, xButtonDown2 = 605, xButtonDown3 = 305, xButtonDown4 = 455, xButtonDown5 = 605;
     yButtonDown1 = 170, yButtonDown2 = 170, yButtonDown3 = 370, yButtonDown4 = 370, yButtonDown5 = 370;
 
-    cantPower1 = 300, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700,  cantPoster4 = 505,  cantPoster5 = 900;
-    resTot1 = 500, resTot2 = 150, resTot3 = 100, resAct1 = 500, resAct2 = 600, resAct3=  250;  
+    cantPower1 = 300, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 5,  cantPoster4 = 5,  cantPoster5 = 5;
+    resTot1 = 35, resTot2 = 40, resTot3 = 100, resAct1 = cantPoster1+cantPoster1, resAct2 = cantPoster1+cantPoster1+cantPoster1;
+    resAct3=  250;  
     
 }
 
@@ -3319,8 +3361,8 @@ function updateLevel12 () {
     xButtonDown1 = 165, xButtonDown2 = 555, xButtonDown3 = 555, xButtonDown4 = 0, xButtonDown5 = 0;
     yButtonDown1 = 170, yButtonDown2 = 170, yButtonDown3 = 370, yButtonDown4 = 0, yButtonDown5 = 0;
 
-    cantPower1 = 300, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700;
-    resTot1 = 500, resTot2 = 150, resTot3 = 100, resAct1 = 500, resAct2 = 600, resAct3=  250;
+    cantPower1 = 20, cantPoster1 = 10, cantPoster2 = 10, cantPoster3 = 5;
+    resTot1 = 15, resTot2 = 20, resTot3 = 15, resAct1 = cantPoster1, resAct2 = cantPoster2, resAct3=  cantPoster3;
        
 }
 
@@ -3353,7 +3395,7 @@ function updateLevel10 () {
     xTank= -25, yTank= 90; 
 
     cantPower1 = 20, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 5;
-    resTot1 = 5, resTot2 = 5, resTot3 = 5, resAct1 = 5, resAct2 = 5, resAct3 = 5;
+    resTot1 = 5, resTot2 = 5, resTot3 = 15, resAct1 = 5, resAct2 = 5, resAct3 = 5;
 
 }
 
@@ -3476,7 +3518,7 @@ function updateLevel2 () {
    resTot1 = 35, resAct1 = 100; 
 }
 
-siguienteNivel = 12;
+siguienteNivel = 13;
 game.state.add('main' , mainState);
 game.state.add('main2', mainState2);
 game.state.add('main3', mainState3);
