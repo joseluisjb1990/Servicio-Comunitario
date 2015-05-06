@@ -46,7 +46,9 @@ var textRes1, textRes2, textRes3, textRes4, textRes5;
 //////////////////////////////////////////////////////////NIVEL 15///////////////////////////////////////////////////////
 
 var mainState15 = {
-
+    
+    preload: cargarTodo,
+    
     create: function() { 
         
         //Todos los botones
@@ -113,8 +115,8 @@ var mainState15 = {
         createMeter(550,30);
         textRes4 = game.add.text(570, 31, resAct4+"/"+resTot4);
         
-        createMeter(280,430);
-        textRes5 = game.add.text(300,431, resAct5+"/"+resTot5);
+        //createMeter(280,430);
+        //textRes5 = game.add.text(300,431, resAct5+"/"+resTot5);
         
         
         //Resistencias
@@ -186,11 +188,11 @@ var mainState15 = {
         createDownWall (720, 150);
         
         //Tubo bajando 1
-        createLeftWall(130, 350);
-        createRightWall(200, 350);
+        //createLeftWall(130, 350);
+        //createRightWall(200, 350);
 
-        createLeftWall(130, 440);
-        createRightWall(200, 370);
+        createLeftWall(470, 440);
+        //createRightWall(200, 370);
         
 
         //Tubo bajando2
@@ -202,14 +204,14 @@ var mainState15 = {
         createRightWall(540, 370);
         
         //Tubo de abajo
-        createTopWall (210, 480);
-        createDownWall(140, 550);
+        //createTopWall (210, 480);
+        //createDownWall(140, 550);
         
-        createTopWall (230, 480);
-        createDownWall(240, 550);
+        //createTopWall (230, 480);
+        //createDownWall(240, 550);
         
-        createTopWall (350, 480);
-        createDownWall(360, 550);
+        //createTopWall (350, 480);
+        createDownWall(120, 350);
         
         createTopWall (550, 480);
         createDownWall(480, 550);
@@ -238,14 +240,49 @@ var mainState15 = {
         //textPoster3.text  = cantPoster3;
         //textPoster4.text  = cantPoster4;
         textPoster5.text  = cantPoster5;
+        
+        resAct1 = cantPoster2;
+        resAct2 = cantPoster5;
+        resAct3=  cantPoster1;
+        resAct4 = cantPoster3;
+        
         textRes1.text      = resAct1+'/'+resTot1; 
         textRes2.text      = resAct2+'/'+resTot2; 
         textRes3.text      = resAct3+'/'+resTot3; 
         textRes4.text      = resAct4+'/'+resTot4;  
         //textRes5.text      = resAct5+'/'+resTot5;
 
-        	
-        if (saltar) {
+        var r1 = resAct3;
+        var r2 = resAct1;
+        var r3 = resAct2;
+        var r4 = resAct4;
+	
+        var r23    = 1 / ((1/r2)+(1/r3));
+        var r123   = r23 + r1;
+        var rTotal = 1 / ((1/r123)+(1/r4));
+        
+        var vTotal = 20 * limitTank;
+        var iTotal = vTotal / rTotal;
+        
+        
+        var v4   = vTotal;
+        var i4   = v4 / r4;
+
+        var v123 = vTotal;
+        var i123 = v123 / r123;
+        
+        var i23 = i123;
+        var i1  = i123;
+        
+        var v23 = i23 * r23;
+        
+        var v2 = v23;
+        var v3 = v23;
+        
+        var i2 = v2 / r2;
+        var i3 = v3 / r3;
+        
+        if (resAct1==resTot1 && resAct2==resTot2 && resAct3==resTot3 && resAct4==resTot4) {
             saltar = false;
             this.state.start('winner');
         }
@@ -262,8 +299,8 @@ var mainState15 = {
             if(createBall < 22)
             {
                 //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
-              createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-              createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+             // createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
+              //createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
               createBall++;
             }
         }
@@ -302,7 +339,8 @@ var mainState15 = {
 
 var mainState14 = {
 
-
+    preload: cargarTodo,
+    
     create: function() { 
         
         buttonTop1  = game.add.button( xButtonTop1,  yButtonTop1 ,  'button1', actionOnClickTop1,  this, 2, 1, 0);
@@ -461,13 +499,44 @@ var mainState14 = {
         //textPoster3.text  = cantPoster3;
         //textPoster4.text  = cantPoster4;
         textPoster5.text  = cantPoster5;
-        textRes1.text      = resAct1+'/'+resTot1; 
-        textRes2.text      = resAct2+'/'+resTot2; 
-        textRes3.text      = resAct3+'/'+resTot3; 
+        
+        textRes1.text      = cantPoster2+'/'+resTot1; 
+        textRes2.text      = cantPoster5+'/'+resTot2; 
+        textRes3.text      = cantPoster1+'/'+resTot3; 
         textRes4.text      = resAct4+'/'+resTot4;  
         
+        var r1 = cantPoster1;
+        var r2 = cantPoster2;
+        var r3 = cantPoster1;
+        var r4 = resAct4;
 	
-        if (saltar) {
+        var r23    = 1 / ((1/r2)+(1/r3));
+        var r123   = r23 + r1;
+        var rTotal = 1 / ((1/r123)+(1/r4));
+        
+        var vTotal = 20 * limitTank;
+        var iTotal = vTotal / rTotal;
+        
+        
+        var v4   = vTotal;
+        var i4   = v4 / r4;
+
+        var v123 = vTotal;
+        var i123 = v123 / r123;
+        
+        var i23 = i123;
+        var i1  = i123;
+        
+        var v23 = i23 * r23;
+        
+        var v2 = v23;
+        var v3 = v23;
+        
+        var i2 = v2 / r2;
+        var i3 = v3 / r3;
+        
+         
+        if (cantPoster2 == resTot1 && cantPoster5 == resTot2 && cantPoster1 == resTot3) {
             saltar = false;
             this.state.start('winner');
         }
@@ -484,8 +553,8 @@ var mainState14 = {
             if(createBall < 22)
             {
                 //i,  j, gravityX, gravityY, velocityX, velocityY, bounce) 
-              createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
-              createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
+             // createWaterBall(waterBalls , 0, 310 , 200, -450 , 300, 100, 1.0);   
+              //createWaterBall(waterBalls2 , 0, 300, 200, 450 , 300, -100, 1.0);
               createBall++;
             }
         }
@@ -3316,9 +3385,9 @@ function updateLevel15 () {
     xButtonDown1 = 285, xButtonDown2 = 605, xButtonDown3 = 285, xButtonDown4 = 455, xButtonDown5 = 605;
     yButtonDown1 = 270, yButtonDown2 = 270, yButtonDown3 = 70, yButtonDown4 = 470, yButtonDown5 = 470;
 
-    cantPower1 = 300, cantPoster1 = 300, cantPoster2 = 100, cantPoster3 = 700,  cantPoster4 = 505,  cantPoster5 = 900;
-    resTot1 = 500, resTot2 = 150, resTot3 = 100, resTot4 = 500, resTot5 = 800;
-    resAct1 = 500, resAct2 = 600, resAct3=  250, resAct4 = 750, resAct5=  890;   
+    cantPower1 = 20, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 5,  cantPoster4 = 5,  cantPoster5 = 5;
+    resTot1 = 20, resTot2 = 20, resTot3 = 10, resTot4 = 10, resTot5 = 800;
+    resAct1 = cantPoster2, resAct2 = cantPoster5, resAct3=  cantPoster1, resAct4 = cantPoster3, resAct5=  890;   
 }
 
 function updateLevel14 () {
@@ -3335,8 +3404,8 @@ function updateLevel14 () {
 
     xTank= -25, yTank= 190; 
 
-    cantPower1 = 20, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 5,  cantPoster4 = 5,  cantPoster5 = 5;
-    resTot1 = 500, resTot2 = 150, resTot3 = 100, resTot4 = 500, resAct1 = 500, resAct2 = 600, resAct3=  250, resAct4=  750;
+    cantPower1 = 20, cantPoster1 = 5, cantPoster2 = 5, cantPoster3 = 0,  cantPoster4 = 0,  cantPoster5 = 5;
+    resTot1 = 10, resTot2 = 20, resTot3 = 10, resTot4 = 5, resAct1 = 5, resAct2 = 5, resAct3=  cantPoster1, resAct4=  5;
 }
 
 function updateLevel13 () {
@@ -3518,7 +3587,7 @@ function updateLevel2 () {
    resTot1 = 35, resAct1 = 100; 
 }
 
-siguienteNivel = 13;
+siguienteNivel = 15;
 game.state.add('main' , mainState);
 game.state.add('main2', mainState2);
 game.state.add('main3', mainState3);
