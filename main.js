@@ -3927,7 +3927,7 @@ function updateLevel2 () {
 
 function victoryLevel1 ()
 {            
-    this.state.start('main15');
+    this.state.start('main2');
 }
 
 siguienteNivel = 2;
